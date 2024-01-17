@@ -6,7 +6,7 @@ FROM ubuntu:18.04
 
 # Install basic Software TODO: check if "python-dev" is required. TODO: add Versioning
 RUN apt-get update && \
-  apt-get install -y curl sudo python3-pip python3-venv gcc python-dev python3-dev libffi-dev openssh-server git
+  apt-get install -y curl sudo python3-pip python3-venv gcc python-dev python3-dev libffi-dev openssh-server git locales
 
 # Install GUI Applications
 RUN apt-get install -y x11-apps xauth
