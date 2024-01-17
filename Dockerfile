@@ -1,5 +1,5 @@
 # TODO: Update Version 
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 # TODO: Remove
 #ENV DEBIAN_FRONTEND=noninteractive
