@@ -25,10 +25,10 @@ https://earthly.dev/blog/docker-secrets/
 
 # Next Steps
 
+- Update quansible Repo to match this project
+
 - Test passing multiple secrets:
   docker service create --name quansible --secret authorized_keys --secret public_repo_priv_key --publish mode=host,target=22,published=2225
 - service controlling -> how to restart service
 
-
-- Update quansible Repo to match this project
 
