@@ -22,7 +22,8 @@ RUN adduser --home /home/usr_quansible --disabled-password --gecos '' usr_quansi
 RUN adduser usr_quansible sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Create Basic File Structure TODO: maybee only /srv/ required - depends of quansible project
+# Create Basic File Structure 
+# TODO: following 3 lines can be deleted they are handled by quansible.sh script
 RUN mkdir -p /srv/quansible-local && \
     mkdir -p /srv/quansible-live && \
     chown -R usr_quansible:usr_quansible /srv/
