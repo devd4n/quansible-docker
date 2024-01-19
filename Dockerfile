@@ -8,8 +8,8 @@ FROM ubuntu:22.04
 RUN apt-get update && \
   apt-get install -y curl sudo python3-pip python3-venv gcc python3-dev libffi-dev openssh-server git locales
 
-# Install GUI Applications
-RUN apt-get install -y x11-apps xauth
+# TODO: Install GUI Applications
+#RUN apt-get install -y x11-apps xauth
 
 # TODO: Add Dev Application e.g. VS-Codium
 # Docu: https://vscodium.com/
@@ -24,6 +24,7 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Create Basic File Structure 
 # TODO: following 3 lines can be deleted they are handled by quansible.sh script
+#       !!! quansible-live is needed in 
 RUN mkdir -p /srv/quansible-local && \
     mkdir -p /srv/quansible-live && \
     chown -R usr_quansible:usr_quansible /srv/
@@ -50,21 +51,23 @@ USER usr_quansible
 RUN pip3 install --upgrade pip && \
   pip3 install --upgrade virtualenv
 
-# change workdir to default dir
+# TODO: use quansible project to setup like onprem solution.
 WORKDIR /srv/
 
-# TODO: use quansible project to setup like onprem solution.
-#RUN  git clone -b dev https://github.com/devd4n/quansible.git
+RUN cd quansible-live && \
+  git clone -b dev https://github.com/devd4n/quansible.git  && \
+  cd quansible && \
+  sudo chmod +x quansible.sh
 
-#RUN cd quansible && \
-#  sudo chmod +x quansible.sh && \
 #  sudo ./quansible.sh setup-env && \
 #  su -c "./quansible.sh upgrade" $USER_ANSIBLE && \
 #  su -c "./quansible.sh update" $USER_ANSIBLE && \
 #  su -c "./quansible.sh update-roles" $USER_ANSIBLE && \
 
-#WORKDIR /srv
+# DEVELOPEMENT ONLY - activate next line for development
+WORKDIR /srv/quansible-live/quansible/
 
 # Expose ssh port
-EXPOSE 22
+EXPOSE 2220
+
 CMD ["/usr/bin/sudo", "/usr/sbin/sshd", "-D"]
