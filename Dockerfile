@@ -66,6 +66,6 @@ RUN git clone -b dev https://github.com/devd4n/quansible.git  && \
 WORKDIR /srv/quansible/
 
 # Expose ssh port
-EXPOSE 2220
+EXPOSE 22
 
 CMD ["/usr/bin/sudo", "/usr/sbin/sshd", "-D"]
