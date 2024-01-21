@@ -55,7 +55,7 @@ RUN pip3 install --upgrade pip && \
 # TODO: use quansible project to setup like onprem solution.
 WORKDIR /srv/
 
-RUN git clone -b add_cronjob_setup_function https://github.com/devd4n/quansible.git  && \
+RUN git clone -b dev https://github.com/devd4n/quansible.git  && \
   cd quansible && \
   sudo chmod +x quansible.sh
 
