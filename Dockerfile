@@ -6,7 +6,8 @@ FROM ubuntu:22.04
 
 # Install basic Software TODO: check if "python-dev" is required. TODO: add Versioning
 RUN apt-get update && \
-  apt-get install -y curl sudo python3-pip python3-venv gcc python3-dev libffi-dev openssh-server git locales
+  apt-get install -y curl sudo python3-pip python3-venv gcc python3-dev libffi-dev openssh-server git locales && \
+  apt-get install -y cron rsync
 
 # TODO: Install GUI Applications
 #RUN apt-get install -y x11-apps xauth
@@ -54,8 +55,7 @@ RUN pip3 install --upgrade pip && \
 # TODO: use quansible project to setup like onprem solution.
 WORKDIR /srv/
 
-RUN cd quansible-live && \
-  git clone -b dev https://github.com/devd4n/quansible.git  && \
+RUN git clone -b add_cronjob_setup_function https://github.com/devd4n/quansible.git  && \
   cd quansible && \
   sudo chmod +x quansible.sh
 
@@ -65,7 +65,7 @@ RUN cd quansible-live && \
 #  su -c "./quansible.sh update-roles" $USER_ANSIBLE && \
 
 # DEVELOPEMENT ONLY - activate next line for development
-WORKDIR /srv/quansible-live/quansible/
+WORKDIR /srv/quansible/
 
 # Expose ssh port
 EXPOSE 2220
