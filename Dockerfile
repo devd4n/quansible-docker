@@ -60,7 +60,8 @@ RUN git clone -b dev https://github.com/devd4n/quansible.git  && \
   sudo chmod +x quansible.sh
 
 # PRODUCTIVE ONLY - deactivate next line for development
-#RUN sudo ./quansible.sh setup-env
+RUN cd /srv/quansible && \
+  sudo ./quansible.sh setup-env
 
 # DEVELOPEMENT ONLY - activate next line for development
 WORKDIR /srv/quansible/

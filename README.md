@@ -2,12 +2,12 @@
 
 # Setup Docker
 docker swarm init
-docker build -t quansible-5 . 
+docker build -t quansible_v0 . 
 docker secret create authorized_keys <<path to authorized_keys_file | or id_rsa.pub file of Host>>
 docker secret create public_repo_priv_key <<>>
 docker secret create private_repo_priv_key <<>>
 
-docker service create --name quansible --secret authorized_keys --publish mode=host,target=2220,published=2225 quansible-5 
+docker service create --name quansible --secret authorized_keys --publish mode=host,target=22,published=2225 quansible_v0
 
 # Clear up Docker
 docker secret rm authorized_keys
@@ -27,8 +27,8 @@ https://earthly.dev/blog/docker-secrets/
 
 TODOs:
 - (ongoing) Update quansible Repo to match this project
+- create volume which maps to /srv -> shouldn't be deleted by shutdown container
 - (open) Test passing multiple secrets:
   docker service create --name quansible --secret authorized_keys --secret public_repo_priv_key --publish mode=host,target=22,published=2225
 - (open) documentation - service controlling -> how to restart service
-
 
