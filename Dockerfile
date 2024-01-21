@@ -59,10 +59,8 @@ RUN git clone -b dev https://github.com/devd4n/quansible.git  && \
   cd quansible && \
   sudo chmod +x quansible.sh
 
-#  sudo ./quansible.sh setup-env && \
-#  su -c "./quansible.sh upgrade" $USER_ANSIBLE && \
-#  su -c "./quansible.sh update" $USER_ANSIBLE && \
-#  su -c "./quansible.sh update-roles" $USER_ANSIBLE && \
+# PRODUCTIVE ONLY - deactivate next line for development
+#RUN sudo ./quansible.sh setup-env
 
 # DEVELOPEMENT ONLY - activate next line for development
 WORKDIR /srv/quansible/
