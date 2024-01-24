@@ -27,8 +27,7 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # TODO: following 3 lines can be deleted they are handled by quansible.sh script
 #       !!! quansible-live is needed in 
 RUN mkdir -p /srv/quansible-local && \
-    mkdir -p /srv/quansible-live && \
-    chown -R usr_quansible:usr_quansible /srv/
+    mkdir -p /srv/quansible-live
 
 # Do SSH Preperation
 # https://stackoverflow.com/questions/23391839/clone-private-git-repo-with-dockerfile
@@ -38,12 +37,16 @@ RUN mkdir -p /srv/quansible-local && \
 RUN mkdir /home/usr_quansible/.ssh/ && \
   touch /home/usr_quansible/.ssh/known_hosts && \
   ssh-keyscan github.com >> /home/usr_quansible/.ssh/known_hosts && \
-  ln -s /run/secrets/authorized_keys /home/usr_quansible/.ssh/authorized_keys && \
-  chown -R usr_quansible:usr_quansible /home/usr_quansible/
+  ln -s /run/secrets/authorized_keys /home/usr_quansible/.ssh/authorized_keys
 
 # Fix Error: "Missing privilege separation directory: /run/sshd"
 # https://serverfault.com/questions/941855/why-am-i-missing-var-run-sshd-after-every-boot
 RUN mkdir /var/run/sshd
+
+COPY ./entrypoint.sh /entrypoint.sh
+
+RUN chown -R usr_quansible:usr_quansible /home/usr_quansible/ && \
+  chown -R usr_quansible:usr_quansible /srv/
 
 # login as sudo user created above
 USER usr_quansible
@@ -69,4 +72,5 @@ WORKDIR /srv/quansible/
 # Expose ssh port
 EXPOSE 22
 
-CMD ["/usr/bin/sudo", "/usr/sbin/sshd", "-D"]
+#CMD ["/usr/bin/sudo", "/usr/sbin/sshd", "-D"]
+ENTRYPOINT ["/usr/bin/sudo", "/entrypoint.sh"]
