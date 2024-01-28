@@ -27,7 +27,8 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # TODO: following 3 lines can be deleted they are handled by quansible.sh script
 #       !!! quansible-live is needed in 
 RUN mkdir -p /srv/quansible-local && \
-    mkdir -p /srv/quansible-live
+    mkdir -p /srv/quansible-live && \
+    mkdir -p "$(dirname /home/usr_quansible/.git_tokens/public_token)"
 
 # Do SSH Preperation
 # https://stackoverflow.com/questions/23391839/clone-private-git-repo-with-dockerfile
@@ -37,7 +38,8 @@ RUN mkdir -p /srv/quansible-local && \
 RUN mkdir /home/usr_quansible/.ssh/ && \
   touch /home/usr_quansible/.ssh/known_hosts && \
   ssh-keyscan github.com >> /home/usr_quansible/.ssh/known_hosts && \
-  ln -s /run/secrets/authorized_keys /home/usr_quansible/.ssh/authorized_keys
+  ln -s /run/secrets/authorized_keys /home/usr_quansible/.ssh/authorized_keys && \
+  ln -s /run/secrets/q_public_token /home/usr_quansible/.git_tokens/q_public_token
 
 # Fix Error: "Missing privilege separation directory: /run/sshd"
 # https://serverfault.com/questions/941855/why-am-i-missing-var-run-sshd-after-every-boot
@@ -62,12 +64,16 @@ RUN git clone -b dev https://github.com/devd4n/quansible.git  && \
   cd quansible && \
   sudo chmod +x quansible.sh
 
-# PRODUCTIVE ONLY - deactivate next line for development
-RUN cd /srv/quansible && \
-  sudo ./quansible.sh setup-env
-
-# DEVELOPEMENT ONLY - activate next line for development
 WORKDIR /srv/quansible/
+
+COPY ./default_quansible.env ./quansible.env /srv/quansible/
+
+RUN sudo chown -R usr_quansible:usr_quansible /srv/
+
+# PRODUCTIVE ONLY - deactivate next line for development
+RUN sudo ./quansible.sh setup-env
+
+WORKDIR /srv/
 
 # Expose ssh port
 EXPOSE 22
