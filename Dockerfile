@@ -39,7 +39,10 @@ RUN mkdir /home/usr_quansible/.ssh/ && \
   touch /home/usr_quansible/.ssh/known_hosts && \
   ssh-keyscan github.com >> /home/usr_quansible/.ssh/known_hosts && \
   ln -s /run/secrets/authorized_keys /home/usr_quansible/.ssh/authorized_keys && \
-  ln -s /run/secrets/q_public_token /home/usr_quansible/.git_tokens/q_public_token
+  ln -s /run/secrets/q_public_token /home/usr_quansible/.git_tokens/q_public_token && \
+  ln -s /run/secrets/qu_git_tokens /home/usr_quansible/.git-credentials
+  ln -s /run/secrets/qu_master_priv /home/usr_quansible/.ssh/id_master
+  ln -s /run/secrets/qu_master_pub /home/usr_quansible/.ssh/id_master.pub
 
 # Fix Error: "Missing privilege separation directory: /run/sshd"
 # https://serverfault.com/questions/941855/why-am-i-missing-var-run-sshd-after-every-boot
