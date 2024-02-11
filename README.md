@@ -16,7 +16,7 @@ docker service create --name quansible --publish mode=host,target=22,published=2
 --mount type=bind,src=C:\Users\<<USERNAME>>\quansible-local,dst=/srv/quansible-local[,readonly] \
 --secret authorized_keys \
 --secret q_public_token \
---secret source=q_qu_git_tokens,target=/run/secrets/qu_git_tokens \
+--secret source=qu_git_tokens,target=/run/secrets/qu_git_tokens \
 --secret source=qu_master_priv,target=/run/secrets/ssh_keys/qu_master_priv \
 --secret source=qu_master_pub,target=/run/secrets/ssh_keys/qu_master_pub \
 quansible_v0
