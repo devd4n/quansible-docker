@@ -7,7 +7,7 @@ docker build -t quansible_v0 . [--no-cache]       # use --no-cache to rebuild co
 ### Create Secrets
 docker secret create authorized_keys <<path to authorized_keys_file | or id_rsa.pub file of Host>>
 docker secret create qu_git_tokens <<path to token file>>
-
+docker secret create q_public_token <<path to token file>>
 docker secret create qu_master_priv <<path to ssh-key file>>
 docker secret create qu_master_pub <<path to ssh-key file>>
 
