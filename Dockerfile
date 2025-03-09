@@ -48,7 +48,7 @@ RUN mkdir /home/usr_quansible/.ssh/ && \
 # https://serverfault.com/questions/941855/why-am-i-missing-var-run-sshd-after-every-boot
 RUN mkdir /var/run/sshd
 
-COPY ./entrypoint.sh /entrypoint.sh
+COPY --chmod=0755 ./entrypoint.sh /entrypoint.sh
 
 RUN chown -R usr_quansible:usr_quansible /home/usr_quansible/ && \
   chown -R usr_quansible:usr_quansible /srv/
@@ -80,6 +80,7 @@ WORKDIR /srv/
 
 # Expose ssh port
 EXPOSE 22
+
 
 #CMD ["/usr/bin/sudo", "/usr/sbin/sshd", "-D"]
 ENTRYPOINT ["/usr/bin/sudo", "/entrypoint.sh"]
