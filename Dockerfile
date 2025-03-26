@@ -50,6 +50,8 @@ RUN mkdir /var/run/sshd
 
 COPY --chmod=0755 ./entrypoint.sh /entrypoint.sh
 
+RUN chmod +x /entrypoint.sh
+
 RUN chown -R usr_quansible:usr_quansible /home/usr_quansible/ && \
   chown -R usr_quansible:usr_quansible /srv/
 
